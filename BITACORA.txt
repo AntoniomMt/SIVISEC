@@ -1,0 +1,55 @@
+Manos: la primera aproximación fuera de una simple detección de rostros, la razón de la versión de python que uso
+etiquetado-lat: intnentando ponerle una pestañita a la fokindetección
+etiqueta y stamp: perfeccionamos y ergonomizamos la etiqueta
+fijado1: primer intento de estabilizar los frames
+    fijado2: uso de interpolación para un seguimiento suave *****El final hasta ahora**[fijado exitoso 1]
+Persona1: Primer intento de detacción de personas sin rostro de por medio
+Persona2: Uso de HOG + OpenCV pa detectar pero funciona medio meh, aun asi es la primera en funcionar
+Persona3: Tentativo a usar por fin yolov5, un poco lento pero funciona a la perfecciónpy
+P4: Forzamos mejor calidad de la cámara 
+P5: Ahora le aplicamos la interpolación al modelo de persona además de un etiquetado dinámico 
+(pimera vez que intento esto último)
+P6: Aunado al etiquetado usamos también una interpolación dinámica, porque si la persona se mueve rápido
+se le complica el seguimiento, osea, en la versión anteriór sacrificamos velocidad de seguimiento por un movimiento
+más suavizado, ahora vamos a subir el alpha dinámicamente si el movimiento es brusco (mayor diferencia de cuadros),
+y lo bajamos si es suave. Aunado a esto también usamos lerp normalmente, pero si el movimiento es muy brusco (ej. te 
+moviste muy lejos), snappea directamente sin suavizado. Aesto le llamarémos interpolación dinámica.
+P7: Fak, a ver, cuando aplicamos interpolación dinámica a una sola caja, es fácil mantener el seguimiento, pero
+cuando hay varias personas, sin un sistema que mantenga la "identidad" de cada una (seguimiento por ID), el programa
+puede perder el "match" entre cuadros consecutivos, causando confusión o salto entre personas. Para mantener cajas
+suaves por persona, necesitamos: Asignar un ID único a cada persona detectada , relacionar las cajas de frame a frame
+(por ejemplo, usando cercanía de posición? creo ando investigando si es posible está mmda), aplicar interpolación por
+ID, no globalmente, dibujar cada markbox con su propia posición suavizada y etiqueta.**(SALIO MAL XXXX)**
+    P8: Pequeña pausa porque la wea anterior no funciono y me deprimí; de "P4" vamos a intentar hacer un conteo de
+personas *****(FURULA ESTA PUTA MAMADA)*****
+P9: Aunado al conteo, vamos a intentar numerar a los vrgas.
+P10: Se pudieron numerar, ahora es momento de volver. Antes intentamos usar la interpolación individual y luego
+detectar más personas. Acá una vez que ya furulo el conteo y número de personas, vamos a intentar interpolarlas a 
+todas alv papuuuuuuuu... MENTIRA!!!! Recordé que nos podemos saltar esa mda si en lugar de estabilizar... INTENTAMOS
+SEGUIRRRRRR ALMMMMMMM. Primer intento de trackeo.
+P11: FUNCIONÓ!!! funcionaría mejor a otra resolución? con menos lag y asi. Ps vamos a intentar chocopapu, intentar
+intercalar los frames usando YOLOv5 cada 3 frames, rellenando lo demas con el supper duper DeepSORT.
+P12: Aunado a eso le ponemos una numeración dinámica alv, pa que no parezca pinches 36 personas nomas con 3.
+P13: vamo a intentar filtrar falsos positivos en el YOLOv5 y algo llamado #iou_threshold# esto es de DeepSORT para 
+también menos duplicados, porque esta vaina hce que solo una detección cercana sea considerada válida.
+P14: Bien, pequeño cambio, volver a intentar la resolución de 1280 x 720, porque en los anteriores como que se
+desconfiguraba la cámara.
+P15: De nuevo intentemos el etiquetado dinámico (Este no esperaba que funcionara tan bien)
+P16: Vale, este sistema tiene un tope de refinamiento puesto que en la papa de mi lap no hay graficos nvidia, asi
+que eso limita mucho el que tanto funciona, aún asi un ultimo intento controlando falsos positivos SOLO DE YOLO.
+vamos a hacer algo llamado "confidence threshold" y a usar una zona de exclusión.
+P17: Aun falta un poco... se que con la jetson sería más facil y se que con la interpolación se solucionaría, pero
+no se si usandola mame todo. Vamos a intenar mejorar el trackeo.
+
+#####
+Beta1: Un refinamiento mamón en el trackeo, empecé por ahí para asi con un mejor suavizado podemos pulir por fin de
+una vez por todas los falsos positivos (Jaló? NO, PURA CAGADA)
+####
+
+P18: Vamos a intentar reducir el área pa que no detecte que los dos brazos son otras dos personas. FUNCIONAAAAAA
+
+###
+Beta2: El programa ya medio furula pero no funciona con la etiqueta al lado, solo eso y tenemos nuestra primera
+buena versión (quedó!!!!!!!!)
+###
+
