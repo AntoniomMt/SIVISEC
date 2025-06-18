@@ -1,0 +1,19 @@
+IMPORTANTE CHOCOPAPU!!!!
+PYTHON VERSION 9!!!!
+
+Librerias necesarias:
+
+opencv-python → para video y dibujo
+ultralytics → para YOLOv5 (modelo de detección)
+deep-sort-realtime → para el trackeo de personas
+numpy → para operaciones de matrices
+
+Pa instalarlo de una acá esta la instrucción:
+pip install opencv-python ultralytics deep-sort-realtime numpy
+
+Para aumentar o bajar la sensibilidad en Beta2.py mueve:
+Tamaño mínimo de área	min_area = 12000	No detecta cosas muy chicas
+Aspect ratio mínimo (alto/ancho)	aspect_ratio_threshold = 0.7	Filtra "cosas aplastadas"
+% de área mínima en el cuadro	min_area_percent = 0.08	Requiere cubrir al menos 8%
+
+Cambié tambien YOLOv5.n por YOLOv5.nu, pero ps sigue igual
