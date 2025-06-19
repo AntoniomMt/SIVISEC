@@ -53,3 +53,5 @@ Beta2: El programa ya medio furula pero no funciona con la etiqueta al lado, sol
 buena versión (quedó!!!!!!!!)
 ###
 
+Beta3: Mejoramos el modelo no solo los filtros, vamo a compensar con más preprocesamiento, agregando un padding
+virtual en la imagen para compensar lados cortados.

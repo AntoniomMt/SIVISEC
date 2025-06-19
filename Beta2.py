@@ -3,8 +3,12 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 import cv2
 import numpy as np
 
+#Tamaño mínimo de área	min_area = 12000	No detecta cosas muy chicas
+#Aspect ratio mínimo (alto/ancho)	aspect_ratio_threshold = 0.7	Filtra "cosas aplastadas"
+#% de área mínima en el cuadro	min_area_percent = 0.08	Requiere cubrir al menos 8%
+
 # Cargar modelo YOLOv5n
-model = YOLO("yolov5n.pt")
+model = YOLO("yolov5nu.pt")
 
 # Inicializar DeepSort tracker
 tracker = DeepSort(max_age=15, nms_max_overlap=0.6)
@@ -18,9 +22,9 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 detection_width, detection_height = 416, 234
 frame_count = 0
 DETECTION_INTERVAL = 3
-min_area = 12000
-aspect_ratio_threshold = 0.7
-min_area_percent = 0.08
+min_area = 10000
+aspect_ratio_threshold = 0.3
+min_area_percent = 0.05
 
 # Historial
 detections = []
