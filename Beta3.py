@@ -4,7 +4,7 @@ from deep_sort_realtime.deepsort_tracker import DeepSort
 import numpy as np
 
 # Cargar modelo YOLOv5n
-model = YOLO("yolov5n.pt")
+model = YOLO("yolov8s.pt")
 
 # Inicializar DeepSort tracker
 tracker = DeepSort(max_age=15)

@@ -55,3 +55,26 @@ buena versión (quedó!!!!!!!!)
 
 Beta3: Mejoramos el modelo no solo los filtros, vamo a compensar con más preprocesamiento, agregando un padding
 virtual en la imagen para compensar lados cortados.
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Side projects
+sp1-videoap-beta1.py: aplicar el modelo a videos ya hechos, sin entrenar
+1.1: mejora y adapta la resolución
+1.2: solucion mark boxes encimadas
+1.3: cambio de YOLO otra vez, versión cinco si pero aumentaremosn porque el nano nomas no furuló
+1.3.1: Opción uno de ceñido de bounding boxes
+1.3.2: Opcion dos, mejorar la calidad
+1.3.2.1: ajustar la opcion 2 (maybe sube de versión)
+1.3.2.2: estiliza las bounding boxes
+1.4.1: Grabación en overlay versión 1
+1.5: weas, ya me rendí por hoy
+1.6: ultimo intento pai
+1.7: me quiero matar
+1.8: ja vamos a intentar yolov8
+1.8.1: mas mejora espero que esta si o me corto un webo ahhhhhh
+
+
+/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
+Side projects
+sp1-fotoap-beta1.py: aplicar el modelo a fotos, sin entrenar
+2: lineas mas gruesas
