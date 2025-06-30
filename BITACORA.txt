@@ -1,3 +1,5 @@
+python -m pip install
+
 Manos: la primera aproximación fuera de una simple detección de rostros, la razón de la versión de python que uso
 etiquetado-lat: intnentando ponerle una pestañita a la fokindetección
 etiqueta y stamp: perfeccionamos y ergonomizamos la etiqueta
@@ -73,6 +75,10 @@ sp1-videoap-beta1.py: aplicar el modelo a videos ya hechos, sin entrenar
 1.8: ja vamos a intentar yolov8
 1.8.1: mas mejora espero que esta si o me corto un webo ahhhhhh
 
+1.9: Intentar reemplazar DeepSort por  bytetrack. FUNCIONAAAAAA AHHHHHHHHHHHH
+1.10: Quitamos la precisión (0.8778979...), pegamos la etiquetita al cuadrado e intentamos numerar los videos
+
+    VideoAp.py: Versión final para videos ya grabados, para evitar "vibraciones" en la númeración mover la linea 25
 
 /*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*/*
 Side projects
