@@ -4,44 +4,37 @@ import os
 from ultralytics import YOLO
 from supervision import ByteTrack, Detections
 
-# Rutas
-video_path = "VIDEOS DE STOCK/video1.mp4"
-output_folder = "RESULTADOS VIDEO BYTETRACK"
-os.makedirs(output_folder, exist_ok=True)
+# Inicializar cámara
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+fps = cap.get(cv2.CAP_PROP_FPS)
+if fps == 0 or fps is None:
+    fps = 30  # Establecer FPS fijo si no se puede obtener
 
-# Generar nombre de archivo no duplicado
-base_name = "video_bytetrack"
-ext = ".mp4"
-output_path = os.path.join(output_folder, base_name + ext)
-counter = 1
-while os.path.exists(output_path):
-    output_path = os.path.join(output_folder, f"{base_name}_{counter}{ext}")
-    counter += 1
+video_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+video_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-# Modelo YOLOv8n
+# YOLOv8n y ByteTrack
 model = YOLO("yolov8n.pt")
+tracker = ByteTrack()
 
-# Parámetros
-conf_threshold = 0.02    # Ajustado para mejorar detección
+# Parámetros de detección
+conf_threshold = 0.02
 min_area = 6000
 aspect_ratio_threshold = 0.35
 min_area_percent = 0.015
-input_size = (2560, 1440)
+input_size = (1280, 720)
 
-# Captura de video
-cap = cv2.VideoCapture(video_path)
-video_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-video_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-fps = cap.get(cv2.CAP_PROP_FPS)
+# Grabación
+recording = False
+video_writer = None
+live_folder = "EN VIVO"
+os.makedirs(live_folder, exist_ok=True)
 
-# Salida de video
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter(output_path, fourcc, fps, (video_width, video_height))
+print("Presiona 'q' para salir, 'r' para grabar, 's' para detener grabación.")
 
-# Tracker ByteTrack
-tracker = ByteTrack()
-
-while cap.isOpened():
+while True:
     ret, frame = cap.read()
     if not ret:
         break
@@ -86,15 +79,13 @@ while cap.isOpened():
             x1, y1, x2, y2 = map(int, track[0])
             label = f"Persona {i}"
 
-            # Parámetros visuales
             thickness = max(2, int(0.005 * video_width))
             font_scale = max(0.4, 0.0007 * video_width)
             font_thickness = max(1, int(0.0012 * video_width))
             label_size, _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, font_scale, font_thickness)
             label_width, label_height = label_size
-            offset = 5  # MÁS PEGADA LA ETIQUETA
+            offset = 5
 
-            # Posición dinámica del texto
             if y2 + offset + label_height < video_height:
                 label_origin = (x1, y2 + offset + label_height)
                 label_box = (x1, y2 + offset, x1 + label_width + 10, y2 + offset + label_height + 10)
@@ -112,8 +103,37 @@ while cap.isOpened():
             cv2.rectangle(frame, (label_box[0], label_box[1]), (label_box[2], label_box[3]), (0, 255, 0), -1)
             cv2.putText(frame, label, label_origin, cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), font_thickness)
 
-    out.write(frame)
+    # Indicador de grabación (círculo rojo)
+    if recording:
+        cv2.circle(frame, (video_width - 20, 20), 10, (0, 0, 255), -1)
 
+    if recording and video_writer:
+        video_writer.write(frame)
+
+    cv2.imshow("VideoAp Realtime", frame)
+    key = cv2.waitKey(1) & 0xFF
+
+    if key == ord('q'):
+        break
+    elif key == ord('r') and not recording:
+        base_name = "video_live"
+        ext = ".mp4"
+        index = 1
+        output_path = os.path.join(live_folder, f"{base_name}_{index}{ext}")
+        while os.path.exists(output_path):
+            index += 1
+            output_path = os.path.join(live_folder, f"{base_name}_{index}{ext}")
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        video_writer = cv2.VideoWriter(output_path, fourcc, fps, (video_width, video_height))
+        recording = True
+        print(f"Grabación iniciada: {output_path}")
+    elif key == ord('s') and recording:
+        recording = False
+        video_writer.release()
+        video_writer = None
+        print("Grabación detenida.")
+
+if video_writer:
+    video_writer.release()
 cap.release()
-out.release()
-print(f"\n Video procesado y guardado en: {output_path}")
+cv2.destroyAllWindows()

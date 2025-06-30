@@ -1,47 +1,32 @@
 import cv2
 import numpy as np
-import os
 from ultralytics import YOLO
 from supervision import ByteTrack, Detections
 
-# Rutas
-video_path = "VIDEOS DE STOCK/video1.mp4"
-output_folder = "RESULTADOS VIDEO BYTETRACK"
-os.makedirs(output_folder, exist_ok=True)
-
-# Generar nombre de archivo no duplicado
-base_name = "video_bytetrack"
-ext = ".mp4"
-output_path = os.path.join(output_folder, base_name + ext)
-counter = 1
-while os.path.exists(output_path):
-    output_path = os.path.join(output_folder, f"{base_name}_{counter}{ext}")
-    counter += 1
+# Inicializar cámara (0 = cámara principal)
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+fps = cap.get(cv2.CAP_PROP_FPS)
+video_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+video_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
 # Modelo YOLOv8n
 model = YOLO("yolov8n.pt")
 
 # Parámetros
-conf_threshold = 0.02    # Ajustado para mejorar detección
+conf_threshold = 0.02
 min_area = 6000
 aspect_ratio_threshold = 0.35
 min_area_percent = 0.015
-input_size = (2560, 1440)
+input_size = (1280, 720)
 
-# Captura de video
-cap = cv2.VideoCapture(video_path)
-video_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-video_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-fps = cap.get(cv2.CAP_PROP_FPS)
-
-# Salida de video
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter(output_path, fourcc, fps, (video_width, video_height))
-
-# Tracker ByteTrack
+# Tracker
 tracker = ByteTrack()
 
-while cap.isOpened():
+print("Cámara abierta. Presiona 'q' para salir.")
+
+while True:
     ret, frame = cap.read()
     if not ret:
         break
@@ -86,15 +71,15 @@ while cap.isOpened():
             x1, y1, x2, y2 = map(int, track[0])
             label = f"Persona {i}"
 
-            # Parámetros visuales
+            # Estética
             thickness = max(2, int(0.005 * video_width))
             font_scale = max(0.4, 0.0007 * video_width)
             font_thickness = max(1, int(0.0012 * video_width))
             label_size, _ = cv2.getTextSize(label, cv2.FONT_HERSHEY_SIMPLEX, font_scale, font_thickness)
             label_width, label_height = label_size
-            offset = 5  # MÁS PEGADA LA ETIQUETA
+            offset = 5
 
-            # Posición dinámica del texto
+            # Posición dinámica
             if y2 + offset + label_height < video_height:
                 label_origin = (x1, y2 + offset + label_height)
                 label_box = (x1, y2 + offset, x1 + label_width + 10, y2 + offset + label_height + 10)
@@ -112,8 +97,13 @@ while cap.isOpened():
             cv2.rectangle(frame, (label_box[0], label_box[1]), (label_box[2], label_box[3]), (0, 255, 0), -1)
             cv2.putText(frame, label, label_origin, cv2.FONT_HERSHEY_SIMPLEX, font_scale, (0, 0, 0), font_thickness)
 
-    out.write(frame)
+    # Mostrar
+    cv2.imshow("VideoAp Realtime", frame)
 
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+# Liberar
 cap.release()
-out.release()
-print(f"\n Video procesado y guardado en: {output_path}")
+cv2.destroyAllWindows()
+print("\nCámara cerrada.")
