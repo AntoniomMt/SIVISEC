@@ -92,7 +92,7 @@ sp1-camaraap-beta1.py: Ya con ByteTrack abrimos la cámara
 nombramos al video "video_live_1.mp4", pero si ya hay uno que se llame asi la terminacion cambia con un _2, _3, y asi sucesivamente
 1.2: disminuimos la velocidad con la que se graba para que deje de verse gracioso y se añadió una marca visual en la pantalla para
 saber que se inició o paró una grabación.
-1.2.1: de nuevo a intentar bajar la velocidad y aprovechamos pa aumentar el grosor de la fuente.
+    1.2.1: de nuevo a intentar bajar la velocidad y aprovechamos pa aumentar el grosor de la fuente.
 3: EXPERIMENTO, intentar juntar DeepSORT y ByteTrack, Deep para el etiquetado y Byte para el seguimiento, azulito más claro
 3.1: jaló pero aun hay cosas po pulir
 
