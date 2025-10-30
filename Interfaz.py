@@ -232,7 +232,7 @@ class SistemaSeguridadControlador:
         except Exception as e:
             self.vista.mostrar_mensaje("Error", str(e))
 
-    # ✅ CORREGIDO
+    # CORREGIDO
     def iniciar_monitoreo(self):
         """Inicia o reinicia correctamente las cámaras"""
         if self.monitoreo_activo:
@@ -273,7 +273,7 @@ class SistemaSeguridadControlador:
         self.vista.mostrar_mensaje("Monitoreo", "El monitoreo se ha detenido")
 
     def procesar_video(self, id_camara):
-        from Bueno import detectar_personas  # Llamar a tu módulo aquí
+        from Bueno2 import detectar_personas  # Llamar a tu módulo aquí
         while self.monitoreo_activo:
             if id_camara not in self.capturas_video:
                 break
