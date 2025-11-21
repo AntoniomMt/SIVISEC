@@ -7,7 +7,8 @@ import time
 # --- Inicialización ---
 model = YOLO("yolov8n.pt")  # Modelo YOLOv8
 mp_hands = mp.solutions.hands
-cap = cv2.VideoCapture(0)
+url = "http://192.168.0.50:8080/video"  # IP de tu tablet
+cap = cv2.VideoCapture(url)
 
 # --- Funciones ---
 def colision(boxA, boxB):

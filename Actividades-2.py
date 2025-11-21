@@ -7,7 +7,13 @@ import time
 # --- Inicialización ---
 model = YOLO("yolov8n.pt")  # Modelo YOLOv8
 mp_hands = mp.solutions.hands
-cap = cv2.VideoCapture(0)
+#cap = cv2.VideoCapture(0)
+#url = "http://192.168.0.50:8080/video"  # IP de tu tablet
+#cap = cv2.VideoCapture(url)
+# URL RTSP del canal 4 de tu grabador Dahua
+url = "rtsp://po:+Admin10@10.6.31.57:554/cam/realmonitor?channel=4&subtype=1"
+# Intentar abrir con ffmpeg (mejor compatibilidad en Windows/Linux)
+cap = cv2.VideoCapture(url, cv2.CAP_FFMPEG)
 
 # --- Funciones ---
 def colision(boxA, boxB):
