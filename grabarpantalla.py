@@ -17,7 +17,7 @@ screen_size = pyautogui.size()
 fourcc = cv2.VideoWriter_fourcc(*"XVID")
 out = cv2.VideoWriter(filename, fourcc, 20.0, screen_size)
 
-print("🎥 Grabando pantalla...")
+print("Grabando pantalla...")
 print("Presiona 'q' en la ventana para detener la grabación.")
 
 while True:

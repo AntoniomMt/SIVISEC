@@ -1,0 +1,29 @@
+#/* -------- SI SE VA EL ENTORNO VIRTUAL -------- */#
+                .venv\Scripts\activate
+
+Después de Actividades de 2 a 4, que son programas con inteligencia situacional:
+    - Si botella colisiona con mano y persona, está sosteniendo
+    - Si después de sostener, no se ve el producto ni mano, está escondiendo
+    - Si despues de esconder vuelven las manos pero no el producto, posible robo, si se ve, regresa a sostener
+    - Si despues de posibel robo vuelve a verse la botella, cambia a actividad sospechoza y reset
+
+Estos son los primeros programas de inteligencia real:
+
+    inteligenciaA.py : primer programa autonomo, aun no hay objetos ni nada, solo cambia de color
+la caja al detectar movimiento bruzco
+
+    inteligenciaA2.py : mejora de detección e intento para incuir detección de objetos y cercanía de personas a estos
+
+    inteligenciaA3.py : sosteniendo botella, identificacion inteligente, quitamos caja de persona y solo experimentamos con
+una boella, usando el cambio de color para el cambio visual.
+
+    inteligenciaA4.py : lo mismo de arriba pero agrgando integración de manos sin reglas explicitas, mejoramiento de la
+coherencia temporal y conviertendolo en un sistema híbrido con embeddings de movimiento. La detección mejoró como nunca,
+siendo un hibrido A - B.
+
+    inteligenciaB.py : avanzando de un híbrido a B con miras a B+, un modelo avanzado, además de un motion predictor para
+compensar los breves ángulos que pierde la detección
+
+    inteligenciaB2 y B3 : intento de mejorar perodemostró ser ineficiente.
+
+    inteligenciaC : Pasamos a C, osea un modelo híbrido, este modelo... aprende!!!1 uuuuuuuuu
