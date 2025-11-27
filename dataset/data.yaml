@@ -1,0 +1,5 @@
+train: C:/Users/jmartinezc1501/Desktop/SIVISEC/dataset/images/train
+val: C:/Users/jmartinezc1501/Desktop/SIVISEC/dataset/images/val
+names:
+  0: bag
+  1: person
