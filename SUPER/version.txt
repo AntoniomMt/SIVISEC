@@ -1,2 +1,0 @@
-Versión Creada con ROBOFLOW
-Terminada el 10/08/2025
