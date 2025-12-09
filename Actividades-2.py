@@ -5,7 +5,7 @@ import math
 import time
 
 # --- Inicialización ---
-model = YOLO("yolov8n.pt")  # Modelo YOLOv8
+model = YOLO("yolov9t.pt")  # Modelo YOLOv9
 mp_hands = mp.solutions.hands
 cap = cv2.VideoCapture(0)
 #url = "http://192.168.0.50:8080/video"  # IP de tu tablet
